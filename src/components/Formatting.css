@@ -1,0 +1,18 @@
+.htBold {
+    font-weight: bold;
+}
+.htItalic {
+    font-style: italic;
+}
+.htUnderline {
+    text-decoration: underline;
+}
+.htTextAlignLeft {
+    text-align: left;
+}
+.htTextAlignCenter {
+    text-align: center;
+}
+.htTextAlignRight {
+    text-align: right;
+}
