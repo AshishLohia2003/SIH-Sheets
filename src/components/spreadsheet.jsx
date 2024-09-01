@@ -13,7 +13,7 @@ import { io } from 'socket.io-client';
 
 registerAllModules();
 
-const socket = io('http://localhost:3000');
+// const socket = io('http://localhost:3000');
 
 const Spreadsheet = () => {
     const hotRef = useRef(null);
@@ -25,38 +25,30 @@ const Spreadsheet = () => {
     const [hotAvailable, setHotAvailable] = useState(false);
 
 
-    useEffect(() => {
-        if (hotRef.current) {
-            const hotInstance = hotRef.current.hotInstance;
-
-            hotInstance.addHook('afterChange', (changes, source) => {
-                if (source === 'loadData') {
-                    return; // Don't emit if data is just being loaded
-                }
-
-                if (changes) {
-                    changes.forEach(([row, col, oldValue, newValue]) => {
-                        const data = {
-                            row,
-                            col,
-                            oldValue,
-                            newValue
-                        };
-                        socket.emit('cellEdit', data); // Emit the event to the backend
-                    });
-                }
-            });
-        }
-    }, []);
-
     // useEffect(() => {
-    //     socket.on('cellEdit', (data) => {
+    //     if (hotRef.current) {
     //         const hotInstance = hotRef.current.hotInstance;
-    //         if (hotInstance) {
-    //             hotInstance.setDataAtCell(data.row, data.col, data.newValue);
-    //         }
-    //     });
+
+    //         hotInstance.addHook('afterChange', (changes, source) => {
+    //             if (source === 'loadData') {
+    //                 return; // Don't emit if data is just being loaded
+    //             }
+
+    //             if (changes) {
+    //                 changes.forEach(([row, col, oldValue, newValue]) => {
+    //                     const data = {
+    //                         row,
+    //                         col,
+    //                         oldValue,
+    //                         newValue
+    //                     };
+    //                     socket.emit('cellEdit', data); // Emit the event to the backend
+    //                 });
+    //             }
+    //         });
+    //     }
     // }, []);
+
 
 
     useEffect(() => {
@@ -80,18 +72,11 @@ const Spreadsheet = () => {
         licenseKey: 'non-commercial-and-evaluation',
         colWidths: 100,
         rowHeights: 30,
-
         manualColumnResize: true,
         manualRowResize: true,
         dropdownMenu: true,
         filters: true,
         copypaste: { copyColumnHeaders: true, copyColumnGroupHeaders: true, copyColumnHeadersOnly: true, },
-        // afterChange: () => {
-        //     if (hotRef.current && hotRef.current.hotInstance) {
-        //         console.log('Handsontable instance is available');
-        //     }
-        // },
-        // afterChange: handleCellChange,
     };
 
     // useEffect(() => {
